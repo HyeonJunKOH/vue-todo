@@ -7,10 +7,12 @@
     <span class="addContainer" v-on:click="addTodo">
         <i class="addBtn fa fa-plus" aria-hidden="true"></i>
     </span>
+
   </div>
 </template>
 
 <script>
+
 export default {
     data(){
         return{
