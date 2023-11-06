@@ -25,7 +25,7 @@ export default {
             if(this.newTodoItem !==""){
                 // 로컬스토리지에 저장
                 var value = this.newTodoItem && this.newTodoItem.trim();
-                localStorage.setItem(value,value);
+                this.$emit('addTodo', value);
                 // 저장 후 input 박스에 있는 내용은 지운다.
                 this.clearInput();
             }
