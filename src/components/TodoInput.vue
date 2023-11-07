@@ -8,16 +8,25 @@
         <i class="addBtn fa fa-plus" aria-hidden="true"></i>
     </span>
 
+    <modal v-if="showModal" @close="showModal=false">
+        <h3 slot="header">경고</h3>
+        <span slot="footer" @click="showModal = false">
+            할 일을 입력해주세요.
+            <i class="closeModalBtn fa fa-times" aria-hidden="true"></i>
+        </span>
+    </modal>
   </div>
 </template>
 
 <script>
+import Modal from './common/AlertModal.vue'
 
 export default {
     data(){
         return{
             // v-model 디렉티브와 데이터 속성 연결
-            newTodoItem:''
+            newTodoItem:'',
+            showModal: false
         }
     },
     methods:{
@@ -30,12 +39,17 @@ export default {
                 this.$emit('addTodo', value);
                 // 저장 후 input 박스에 있는 내용은 지운다.
                 this.clearInput();
+            }else{
+                this.showModal = !this.showModal;
             }
         },
         // input 박스에 있는 내용을 지운다.
         clearInput(){
             this.newTodoItem = '';
         }
+    },
+    components: {
+        Modal: Modal
     }
 }
 </script>
