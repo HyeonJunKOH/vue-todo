@@ -2,9 +2,11 @@
   <section>
     <transition-group name="list" tag="ul">
         <!-- todoItems의 개수만큼 반복해서 li태그를 출력  -->
-        <li v-for="(todoItem,index) in propsdata" :key="todoItem" class="shadow">
-            <i class="checkBtn fa fa-check" aria-hidden="true"></i>
-            {{todoItem}}
+        <li v-for="(todoItem,index) in propsdata" :key="todoItem.item" class="shadow">
+            <!-- v-for의 경우 자체적으로 list에 있는 index를 인식하는 기능이 내장되어있다. -->
+            <i class="checkBtn fa fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" 
+                @click="toggleComplete(todoItem, index)"></i>
+            <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
             <!-- 삭제버튼 -->
             <span class="removeBtn" type="button" @click="removeTodo(todoItem, index)">
                 <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -17,16 +19,20 @@
 <script>
 export default {
     props: ['propsdata'],
-    // 삭제버튼 메소드
     methods: {
+        // 삭제버튼 메소드
         removeTodo(todoItem, index){
+            // removeTodo: function(){}와 같은 문법
             this.$emit('removeTodo', todoItem, index);
+        },
+        toggleComplete(todoItem, index){
+            this.$emit('toggleItem', todoItem, index)
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
     .list-item{
         display: inline-block;
         margin-right: 10px;
@@ -61,6 +67,13 @@ export default {
         line-height: 45px;
         color: #62acde;
         margin-right: 5px;
+    }
+    .checkBtnCompleted {
+        color : #b3adad;
+    }
+    .textCompleted {
+        text-decoration: line-through;
+        color: #b3adad;
     }
     .removeBtn {
         margin-left: auto;

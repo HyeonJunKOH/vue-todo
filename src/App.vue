@@ -2,8 +2,9 @@
   <div id="app">
     <!-- 등록한 컴포넌트 화면에 뿌려주기 -->
     <TodoHeader></TodoHeader>
-    <TodoInput v-on:addTodo="addTodo"></TodoInput>
-    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"></TodoList>
+    <TodoInput v-on:addTodoItem="addOneItem"></TodoInput>
+    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo" 
+      @toggleItem="toggleOneItem"></TodoList>
     <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
   </div>
 </template>
@@ -26,23 +27,31 @@ export default {
   created() {
     if (localStorage.length > 0) {
       for (var i = 0; i < localStorage.length; i++) {
-        this.todoItems.push(localStorage.key(i));
+        this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
       }
     }
   },
   methods: {
-    addTodo(todoItem){
-      // 로컬 스토리지에 데이터를 추가하는 로직
-      localStorage.setItem(todoItem, todoItem);
-      this.todoItems.push(todoItem);
+    // 로컬 스토리지에 데이터를 추가하는 로직
+    addOneItem(todoItem){
+      // todoItem 은 TodoInput 컴포넌트에서 올라온 이벤트 발생을 받은 인자
+      var obj = {completed: false, item: todoItem};
+      localStorage.setItem(todoItem, JSON.stringify(obj));
+      this.todoItems.push(obj);
     },
     clearAll(){
       localStorage.clear();
-      this.todoItems=[];
+      this.todoItems= [];
     },
     removeTodo(todoItem, index){
-      localStorage.removeItem(todoItem);
+      localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index,1);
+    },
+     toggleOneItem(todoItem, index) {
+      this.todoItems[index].completed =!this.todoItems[index].completed;
+      // 로컬스토리지의 데이터를 갱신
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     }
   },
   components:{

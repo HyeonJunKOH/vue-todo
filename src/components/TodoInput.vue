@@ -27,7 +27,7 @@ export default {
             // v-model 디렉티브와 데이터 속성 연결
             newTodoItem:'',
             showModal: false
-        }
+        } 
     },
     methods:{
         // 버튼 이벤트에 대한 메소드 정의 및 input 박스에 입력될 값과 연결
@@ -35,8 +35,7 @@ export default {
             // newTodoItem이 공백이 아닐경우
             if(this.newTodoItem !==""){
                 // 로컬스토리지에 저장
-                var value = this.newTodoItem && this.newTodoItem.trim();
-                this.$emit('addTodo', value);
+                this.$emit('addTodoItem', this.newTodoItem);
                 // 저장 후 input 박스에 있는 내용은 지운다.
                 this.clearInput();
             }else{
