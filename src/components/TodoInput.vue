@@ -78,4 +78,7 @@ export default {
         color: white;
         vertical-align: middle;
     }
+    .closeModalBtn {
+        color: #42b983;
+    }
 </style>

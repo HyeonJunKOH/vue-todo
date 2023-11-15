@@ -33,10 +33,6 @@ export default {
 </script>
 
 <style scoped>
-    .list-item{
-        display: inline-block;
-        margin-right: 10px;
-    }
     .list-move{
         transition: transform 1s;
     }

@@ -35,7 +35,7 @@ export default {
     // 로컬 스토리지에 데이터를 추가하는 로직
     addOneItem(todoItem){
       // todoItem 은 TodoInput 컴포넌트에서 올라온 이벤트 발생을 받은 인자
-      var obj = {completed: false, item: todoItem};
+      const obj = {completed: false, item: todoItem};
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
@@ -56,9 +56,10 @@ export default {
   },
   components:{
     'TodoHeader': TodoHeader,
-    'TodoInput' : TodoInput,
-    'TodoList' : TodoList,
-    'TodoFooter': TodoFooter
+    // 키값과 밸류 값이 같을때 생략 가능
+    TodoInput,
+    TodoList,
+    TodoFooter
   }
 }
 </script>
