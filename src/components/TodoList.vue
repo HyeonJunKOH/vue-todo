@@ -1,8 +1,9 @@
 <template>
   <section>
+    <!-- 뷰 자체적으로 제공하는 애니메이션 효과를 사용하기 위한 transition-group 태그 -->
     <transition-group name="list" tag="ul">
         <!-- todoItems의 개수만큼 반복해서 li태그를 출력  -->
-        <li v-for="(todoItem,index) in propsdata" :key="todoItem.item" class="shadow">
+        <li v-for="(todoItem,index) in this.$store.state.todoItems" :key="todoItem.item" class="shadow">
             <!-- v-for의 경우 자체적으로 list에 있는 index를 인식하는 기능이 내장되어있다. -->
             <i class="checkBtn fa fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" 
                 @click="toggleComplete(todoItem, index)"></i>
@@ -18,15 +19,14 @@
 
 <script>
 export default {
-    props: ['propsdata'],
     methods: {
         // 삭제버튼 메소드
         removeTodo(todoItem, index){
             // removeTodo: function(){}와 같은 문법
-            this.$emit('removeTodo', todoItem, index);
+            this.$store.commit('removeOneItem', {todoItem, index});
         },
         toggleComplete(todoItem, index){
-            this.$emit('toggleItem', todoItem, index)
+            this.$store.commit('toggleOneItem', {todoItem, index})
         }
     }
 }

@@ -24,7 +24,7 @@ import Modal from './common/AlertModal.vue'
 export default {
     data(){
         return{
-            // v-model 디렉티브와 데이터 속성 연결
+            // v-model 디렉티브와 데이터 속성 연결, 추가될 목록
             newTodoItem:'',
             showModal: false
         } 
@@ -34,20 +34,22 @@ export default {
         addTodo(){
             // newTodoItem이 공백이 아닐경우
             if(this.newTodoItem !==""){
-                // 로컬스토리지에 저장
-                this.$emit('addTodoItem', this.newTodoItem);
-                // 저장 후 input 박스에 있는 내용은 지운다.
+                // addTodoItem 이란 이벤트명으로 상위 컴포넌트로 emit
+                // this.$emit('addTodoItem', this.newTodoItem);
+                this.$store.commit('addOneItem', this.newTodoItem);
                 this.clearInput();
             }else{
+                // newTodoItem이 공백인 경우 모달 창 띄우기
                 this.showModal = !this.showModal;
             }
         },
-        // input 박스에 있는 내용을 지운다.
+        // 할일 추가 후 텍스트 지우기
         clearInput(){
             this.newTodoItem = '';
         }
     },
     components: {
+        // 모달 컴포넌트 등록
         Modal: Modal
     }
 }
