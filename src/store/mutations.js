@@ -1,4 +1,5 @@
 // 로컬 스토리지에 할일 추가하는 로직
+// mutations: state 값을 변경하는 이벤트 로직 . 메서드 methods
 const addOneItem = (state, todoItem) => {
     // todoItem 은 TodoInput 컴포넌트에서 올라온 이벤트 발생을 받은 인자
     const obj = { completed: false, item: todoItem };
